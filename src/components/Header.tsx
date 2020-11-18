@@ -1,4 +1,4 @@
-import { makeStyles, createStyles, SvgIcon, Tab, Tabs, Theme, AppBar, Container, Box } from '@material-ui/core';
+import { makeStyles, createStyles, Icon, Tab, Tabs, Theme, AppBar, Container, Box } from '@material-ui/core';
 import React from 'react';
 import { ITab } from '../interfaces/ITab';
 import { ReactComponent as Logo } from '../assets/icon.svg';
@@ -10,6 +10,8 @@ interface Props {
   setActiveTab: Function;
 }
 
+
+
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
     appBar: {
@@ -17,8 +19,15 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'row',
       height: '66px'
     },
-    logoSvg: {
-      width: '100px',
+
+    // Logo
+    iconRoot: {
+      textAlign: 'center'
+    },
+    iconImg: {
+      display: 'flex',
+      height: 'inherit',
+      width: 'inherit'
     },
 
     box: {
@@ -64,17 +73,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.Element {
   const classes = useStyles();
+
+  const logo = (
+    <Icon classes={{ root: classes.iconRoot }}>
+      <img className={classes.iconImg} src='../assets/logo.svg' alt='logo'/>
+    </Icon>
+  );
+
   function handleChange(event: React.ChangeEvent<{}>, newValue: number) {
     setActiveTab(newValue);
   }
-  
 
   return (
     <AppBar className={classes.appBar}>
       <Container className={classes.container}>
-        <SvgIcon className={classes.logoSvg}>
-          <Logo />
-        </SvgIcon>
+        {logo}
         <Box className={classes.box}>
           <Tabs
             value={activeTab}
@@ -85,7 +98,7 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
               root: classes.tabsRoot
             }}
           >
-            {tabs.map(tab => (
+            {tabs.map((tab, index) => (
               <Tab
                 classes={{
                   root: classes.tabRoot,
