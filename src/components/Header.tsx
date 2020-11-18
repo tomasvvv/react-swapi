@@ -1,4 +1,4 @@
-import { makeStyles, Paper, SvgIcon, Tab, Tabs } from '@material-ui/core';
+import { makeStyles, createStyles, SvgIcon, Tab, Tabs, Theme, AppBar } from '@material-ui/core';
 import React, { useState } from 'react';
 import { ITab } from '../interfaces/ITab';
 import { ReactComponent as Logo } from '../assets/icon.svg';
@@ -10,16 +10,29 @@ interface Props {
   setActiveTab: Function;
 }
 
+const useStyles = makeStyles((theme: Theme) => 
+  createStyles({
+    appBar: {
+      backgroundColor: '#ffffff'
+    },
+    logoSvg: {
+      width: '100px',
+      height: '100px'
+    }
+  })
+);
+
 export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.Element {
+  const classes = useStyles();
   const [value, setValue] = useState(1);
   function handleChange(event: React.ChangeEvent<{}>, newValue: number) {
     setValue(newValue);
   }
+  
 
   return (
-    <header>
-      {/* Logo */}
-      <SvgIcon>
+    <AppBar className={classes.appBar}>
+      <SvgIcon className={classes.logoSvg}>
         <Logo />
       </SvgIcon>
 
@@ -30,13 +43,12 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
         onChange={handleChange}
         aria-label="disabled tabs example"
       >
-        <Tab label="Active" />
-        <Tab label="Disabled" disabled />
-        <Tab label="Active" />
+        {tabs.map(tab => (
+          <Tab label={tab.title}/>
+        ))}
       </Tabs>
 
-      {/* Account */}
       <AccountCircle />
-    </header>
+    </AppBar>
   );
 }
