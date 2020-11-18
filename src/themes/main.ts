@@ -5,6 +5,25 @@ const theme = createMuiTheme({
     primary: {
       main: '#1E283B',
     },
+    secondary: {
+      main: '#fff',
+    },
+    background: {
+      default: '#fff',
+    },
+    action: {
+      selected: '#fff',
+      hover: 'rgba(255, 255, 255, .3)',
+    },
+  },
+  typography: {
+    fontFamily: [
+      'Mulish',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
   },
 });
 
