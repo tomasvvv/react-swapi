@@ -1,8 +1,18 @@
-import { makeStyles, createStyles, Icon, Tab, Tabs, Theme, AppBar, Container, Box } from '@material-ui/core';
+import {
+  makeStyles,
+  createStyles,
+  Icon,
+  Tab,
+  Tabs,
+  Theme,
+  AppBar,
+  Container,
+  Box,
+} from '@material-ui/core';
 import React from 'react';
 import { ITab } from '../interfaces/ITab';
-import { ReactComponent as Logo } from '../assets/icon.svg';
 import { AccountCircle } from '@material-ui/icons';
+import { ReactComponent as Logo } from '../assets/logo.svg';
 
 interface Props {
   tabs: ITab[];
@@ -10,41 +20,41 @@ interface Props {
   setActiveTab: Function;
 }
 
-
-
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
       backgroundColor: '#ffffff',
       flexDirection: 'row',
-      height: '66px'
+      height: '66px',
+      zIndex: theme.zIndex.drawer + 1,
     },
 
     // Logo
     iconRoot: {
-      textAlign: 'center'
+      height: '100%',
+      width: 'fit-content',
+      display: 'flex',
+      alignItems: 'center',
     },
     iconImg: {
-      display: 'flex',
-      height: 'inherit',
-      width: 'inherit'
+      height: '59px',
+      width: '59px',
     },
 
     box: {
       display: 'flex',
       width: '100%',
       placeContent: 'flex-end',
-      alignItems: 'center'
+      alignItems: 'center',
     },
-    container: {
+    headerContainer: {
       display: 'flex',
       flexDirection: 'row',
-      maxWidth: '1440px'
     },
-    
+
     // Tabs wrapper
     tabsRoot: {
-      height: '100%'
+      height: '100%',
     },
 
     // Tab items
@@ -58,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'flex-start',
       textTransform: 'none',
       fontSize: '16px',
-      alignItems: 'end'
+      alignItems: 'end',
     },
     tabIcon: {
       marginRight: '8px',
@@ -66,9 +76,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
     // Account button icon
     accountButton: {
-      marginLeft: '10px'
-    }
-  })
+      marginLeft: '10px',
+    },
+  }),
 );
 
 export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.Element {
@@ -76,7 +86,8 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
 
   const logo = (
     <Icon classes={{ root: classes.iconRoot }}>
-      <img className={classes.iconImg} src='../assets/logo.svg' alt='logo'/>
+      <Logo className={classes.iconImg} />
+      {/* <img className={classes.iconImg} src={require('./../assets/logo.svg')} alt="logo" /> */}
     </Icon>
   );
 
@@ -85,8 +96,8 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
   }
 
   return (
-    <AppBar className={classes.appBar}>
-      <Container className={classes.container}>
+    <AppBar position="relative" className={classes.appBar}>
+      <Container className={classes.headerContainer} maxWidth={false}>
         {logo}
         <Box className={classes.box}>
           <Tabs
@@ -95,26 +106,23 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
             textColor="primary"
             onChange={handleChange}
             classes={{
-              root: classes.tabsRoot
+              root: classes.tabsRoot,
             }}
           >
             {tabs.map((tab, index) => (
               <Tab
+                key={index}
                 classes={{
                   root: classes.tabRoot,
-                  wrapper: classes.tabIconLabelWrapper
+                  wrapper: classes.tabIconLabelWrapper,
                 }}
                 label={tab.title}
-                icon={
-                  tab.icon && React.cloneElement(
-                    tab.icon, 
-                    { className: classes.tabIcon }
-                  )
-                }
+                icon={tab.icon && React.cloneElement(tab.icon, { className: classes.tabIcon })}
               />
             ))}
-          </Tabs> 
-          <AccountCircle className={classes.accountButton} color='primary' /> {/* Account probably */}
+          </Tabs>
+          <AccountCircle className={classes.accountButton} color="primary" />{' '}
+          {/* Account probably */}
         </Box>
       </Container>
     </AppBar>
