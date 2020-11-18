@@ -1,4 +1,4 @@
 export interface ITab {
   title: string;
-  icon?: null;
+  icon?: React.ReactElement;
 }
