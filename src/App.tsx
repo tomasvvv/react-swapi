@@ -1,6 +1,9 @@
-import { CssBaseline } from '@material-ui/core';
+import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
+import { InsertDriveFile, PostAdd } from '@material-ui/icons';
 import React, { useState } from 'react';
 import './App.css';
+
+import mainTheme from './themes/main';
 
 // Components
 import Header from './components/Header';
@@ -9,8 +12,8 @@ import { ITab } from './interfaces/ITab';
 
 export default function App(): JSX.Element {
   const tabs: ITab[] = [
-    { title: 'First tab', icon: null },
-    { title: 'Second tab', icon: null },
+    { title: 'First tab', icon: <InsertDriveFile/> },
+    { title: 'Second tab', icon: <PostAdd/> },
   ];
   const [activeTab, setActiveTab] = useState<number>(0); // tabs index
 
@@ -18,7 +21,7 @@ export default function App(): JSX.Element {
   const [activeSidebarTab, setActiveSidebarTab] = useState<number>(0); // sidebarTabs index
 
   return (
-    <>
+    <MuiThemeProvider theme={mainTheme}>
       <CssBaseline />
       <div className="App">
         <Header tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -28,6 +31,6 @@ export default function App(): JSX.Element {
           setActiveTab={setActiveSidebarTab}
         />
       </div>
-    </>
+    </MuiThemeProvider>
   );
 }
