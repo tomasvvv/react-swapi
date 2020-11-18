@@ -8,11 +8,11 @@ import {
   Container,
 } from '@material-ui/core';
 import React from 'react';
-import { Tab } from '../interfaces/Tab';
+import { ITab } from '../interfaces/ITab';
 import './sidebar.css';
 
 interface Props {
-  tabs?: Tab[];
+  tabs?: ITab[];
   activeTab?: number;
   setActiveTab?: Function;
 }
@@ -24,12 +24,6 @@ const useStyles = makeStyles({
 });
 
 export default function Sidebar({ tabs, activeTab, setActiveTab }: Props): JSX.Element {
-  function tabClicked(index: number) {
-    if (!setActiveTab) return;
-
-    setActiveTab(index);
-  }
-
   const classes = useStyles();
 
   return (

@@ -1,16 +1,21 @@
-import { makeStyles, SvgIcon } from '@material-ui/core';
-import React from 'react';
-import { Tab } from '../interfaces/Tab';
+import { makeStyles, Paper, SvgIcon, Tab, Tabs } from '@material-ui/core';
+import React, { useState } from 'react';
+import { ITab } from '../interfaces/ITab';
 import { ReactComponent as Logo } from '../assets/icon.svg';
 import { AccountCircle } from '@material-ui/icons';
 
 interface Props {
-  tabs: Tab[];
+  tabs: ITab[];
   activeTab: number;
   setActiveTab: Function;
 }
 
 export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.Element {
+  const [value, setValue] = useState(1);
+  function handleChange(event: React.ChangeEvent<{}>, newValue: number) {
+    setValue(newValue);
+  }
+
   return (
     <header>
       {/* Logo */}
@@ -18,10 +23,17 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
         <Logo />
       </SvgIcon>
 
-      {/* Tabs */}
-      {tabs.map((tab) => (
-        <p>{tab.title}</p>
-      ))}
+      <Tabs
+        value={value}
+        indicatorColor="primary"
+        textColor="primary"
+        onChange={handleChange}
+        aria-label="disabled tabs example"
+      >
+        <Tab label="Active" />
+        <Tab label="Disabled" disabled />
+        <Tab label="Active" />
+      </Tabs>
 
       {/* Account */}
       <AccountCircle />

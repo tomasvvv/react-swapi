@@ -5,16 +5,16 @@ import './App.css';
 // Components
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
-import { Tab } from './interfaces/Tab';
+import { ITab } from './interfaces/ITab';
 
 export default function App(): JSX.Element {
-  const tabs: Tab[] = [
+  const tabs: ITab[] = [
     { title: 'First tab', icon: null },
     { title: 'Second tab', icon: null },
   ];
   const [activeTab, setActiveTab] = useState<number>(0); // tabs index
 
-  const sidebarTabs: Tab[] = [{ title: 'First' }, { title: 'Second' }, { title: 'Third' }];
+  const sidebarTabs: ITab[] = [{ title: 'First' }, { title: 'Second' }, { title: 'Third' }];
   const [activeSidebarTab, setActiveSidebarTab] = useState<number>(0); // sidebarTabs index
 
   return (
