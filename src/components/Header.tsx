@@ -4,9 +4,9 @@ import {
   Icon,
   Tab,
   Tabs,
+  Box,
   Theme,
   AppBar,
-  Box,
   Toolbar,
 } from '@material-ui/core';
 import React from 'react';
@@ -20,16 +20,13 @@ interface Props {
   setActiveTab: Function;
 }
 
+const drawerWidth = 200;
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      backgroundColor: '#ffffff',
-      flexDirection: 'row',
-      // height: '66px',
+      backgroundColor: theme.palette.secondary.main,
       zIndex: theme.zIndex.drawer + 1,
-    },
-    toolbar: {
-      display: 'flex',
       width: '100%',
     },
 
@@ -42,25 +39,16 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     box: {
-      display: 'flex',
       width: '100%',
+      display: 'flex',
       placeContent: 'flex-end',
       alignItems: 'center',
-    },
-    headerContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-    },
-
-    // Tabs wrapper
-    tabsRoot: {
-      height: '100%',
     },
 
     // Tab items
     tabRoot: {
-      padding: '0',
-      width: '203px',
+      width: '200px',
+      paddingLeft: '0',
       marginLeft: '36px',
       minHeight: theme.mixins.toolbar.minHeight,
     },
@@ -75,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: '8px',
     },
 
-    // Account button icon
+    // Account icon
     accountButton: {
       marginLeft: '10px',
     },
@@ -97,8 +85,8 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
 
   return (
     <React.Fragment>
-      <AppBar position="relative" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
           {logo}
           <Box className={classes.box}>
             <Tabs
@@ -106,9 +94,6 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
               indicatorColor="primary"
               textColor="primary"
               onChange={handleChange}
-              classes={{
-                root: classes.tabsRoot,
-              }}
             >
               {tabs.map((tab, index) => (
                 <Tab
@@ -123,7 +108,6 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
               ))}
             </Tabs>
             <AccountCircle className={classes.accountButton} color="primary" />{' '}
-            {/* Account probably */}
           </Box>
         </Toolbar>
       </AppBar>

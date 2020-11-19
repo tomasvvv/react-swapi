@@ -5,6 +5,7 @@ import {
   ListItem,
   ListItemText,
   Divider,
+  Toolbar,
   makeStyles,
   createStyles,
 } from '@material-ui/core';
@@ -21,12 +22,19 @@ const drawerWidth = 200;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    drawer: {
+      display: 'flex',
+      width: `${drawerWidth}px`,
+      flexShrink: 0,
+    },
     drawerPaper: {
       width: `${drawerWidth}px`,
       backgroundColor: theme.palette.primary.main,
-      top: 'initial',
       paddingTop: theme.mixins.toolbar.minHeight,
     },
+
+    // for content to be below app bar
+    toolbar: theme.mixins.toolbar,
 
     list: {
       padding: '0',
@@ -43,9 +51,6 @@ const useStyles = makeStyles((theme: Theme) =>
     listItemText: {
       textAlign: 'center',
     },
-    divider: {
-      backgroundColor: theme.palette.secondary.main,
-    },
   }),
 );
 
@@ -54,31 +59,31 @@ export default function Sidebar({ tabs, activeTab, setActiveTab }: Props): JSX.E
 
   return (
     <Drawer
-      variant="persistent"
-      open={true}
+      className={classes.drawer}
+      variant="permanent"
       classes={{
         paper: classes.drawerPaper,
       }}
+      anchor="left"
     >
-      <Divider className={classes.divider} />
-      <List component="nav" className={classes.list}>
+      <Toolbar />
+      <Divider />
+      <List className={classes.list}>
         {tabs?.map((tab, index) => (
-          <>
-            <ListItem
-              classes={{
-                root: classes.listItem,
-                selected: classes.selectedListItem,
-              }}
-              key={index}
-              selected={activeTab === index}
-              button
-              onClick={() => setActiveTab && setActiveTab(index)}
-            >
-              <ListItemText className={classes.listItemText} primary={tab.title} />
-            </ListItem>
-          </>
+          <ListItem
+            key={index}
+            selected={activeTab === index}
+            button
+            onClick={() => setActiveTab && setActiveTab(index)}
+            classes={{
+              root: classes.listItem,
+              selected: classes.selectedListItem,
+            }}
+            divider={true}
+          >
+            <ListItemText className={classes.listItemText} primary={tab.title} />
+          </ListItem>
         ))}
-        <Divider className={classes.divider} />
       </List>
     </Drawer>
   );
