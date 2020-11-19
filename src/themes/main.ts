@@ -25,6 +25,11 @@ const theme = createMuiTheme({
       '"Segoe UI Symbol"',
     ].join(','),
   },
+  mixins: {
+    toolbar: {
+      minHeight: '66px',
+    },
+  },
 });
 
 export default theme;

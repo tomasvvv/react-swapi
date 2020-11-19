@@ -6,8 +6,8 @@ import {
   Tabs,
   Theme,
   AppBar,
-  Container,
   Box,
+  Toolbar,
 } from '@material-ui/core';
 import React from 'react';
 import { ITab } from '../interfaces/ITab';
@@ -25,8 +25,12 @@ const useStyles = makeStyles((theme: Theme) =>
     appBar: {
       backgroundColor: '#ffffff',
       flexDirection: 'row',
-      height: '66px',
+      // height: '66px',
       zIndex: theme.zIndex.drawer + 1,
+    },
+    toolbar: {
+      display: 'flex',
+      width: '100%',
     },
 
     // Logo
@@ -35,10 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 'fit-content',
       display: 'flex',
       alignItems: 'center',
-    },
-    iconImg: {
-      height: '59px',
-      width: '59px',
     },
 
     box: {
@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '0',
       width: '203px',
       marginLeft: '36px',
+      minHeight: theme.mixins.toolbar.minHeight,
     },
     tabIconLabelWrapper: {
       flexDirection: 'row',
@@ -86,8 +87,7 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
 
   const logo = (
     <Icon classes={{ root: classes.iconRoot }}>
-      <Logo className={classes.iconImg} />
-      {/* <img className={classes.iconImg} src={require('./../assets/logo.svg')} alt="logo" /> */}
+      <Logo />
     </Icon>
   );
 
@@ -96,35 +96,37 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
   }
 
   return (
-    <AppBar position="relative" className={classes.appBar}>
-      <Container className={classes.headerContainer} maxWidth={false}>
-        {logo}
-        <Box className={classes.box}>
-          <Tabs
-            value={activeTab}
-            indicatorColor="primary"
-            textColor="primary"
-            onChange={handleChange}
-            classes={{
-              root: classes.tabsRoot,
-            }}
-          >
-            {tabs.map((tab, index) => (
-              <Tab
-                key={index}
-                classes={{
-                  root: classes.tabRoot,
-                  wrapper: classes.tabIconLabelWrapper,
-                }}
-                label={tab.title}
-                icon={tab.icon && React.cloneElement(tab.icon, { className: classes.tabIcon })}
-              />
-            ))}
-          </Tabs>
-          <AccountCircle className={classes.accountButton} color="primary" />{' '}
-          {/* Account probably */}
-        </Box>
-      </Container>
-    </AppBar>
+    <React.Fragment>
+      <AppBar position="relative" className={classes.appBar}>
+        <Toolbar className={classes.toolbar}>
+          {logo}
+          <Box className={classes.box}>
+            <Tabs
+              value={activeTab}
+              indicatorColor="primary"
+              textColor="primary"
+              onChange={handleChange}
+              classes={{
+                root: classes.tabsRoot,
+              }}
+            >
+              {tabs.map((tab, index) => (
+                <Tab
+                  key={index}
+                  classes={{
+                    root: classes.tabRoot,
+                    wrapper: classes.tabIconLabelWrapper,
+                  }}
+                  label={tab.title}
+                  icon={tab.icon && React.cloneElement(tab.icon, { className: classes.tabIcon })}
+                />
+              ))}
+            </Tabs>
+            <AccountCircle className={classes.accountButton} color="primary" />{' '}
+            {/* Account probably */}
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </React.Fragment>
   );
 }

@@ -19,12 +19,10 @@ import { ITab } from './interfaces/ITab';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    container: {
-      // maxWidth: '100%',
-    },
     app: {
       minHeight: '100vh',
     },
+    container: {},
   }),
 );
 
@@ -45,16 +43,14 @@ export default function App(): JSX.Element {
       <CssBaseline />
       <div className={classes.app}>
         <Header tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-        <Container className={classes.container}>
-          <Sidebar
-            tabs={sidebarTabs}
-            activeTab={activeSidebarTab}
-            setActiveTab={setActiveSidebarTab}
-          />
-          <Paper variant="outlined">
-            <h3>Labas</h3>
-          </Paper>
-        </Container>
+        <Sidebar
+          tabs={sidebarTabs}
+          activeTab={activeSidebarTab}
+          setActiveTab={setActiveSidebarTab}
+        />
+        <main className={classes.content}>
+          <h3>Labas</h3>
+        </main>
       </div>
     </MuiThemeProvider>
   );

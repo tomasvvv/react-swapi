@@ -22,14 +22,13 @@ const drawerWidth = 200;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     drawerPaper: {
-      top: 'unset',
+      width: `${drawerWidth}px`,
       backgroundColor: theme.palette.primary.main,
-      paddingTop: '76px',
+      top: 'initial',
+      paddingTop: theme.mixins.toolbar.minHeight,
     },
 
     list: {
-      width: `${drawerWidth}px`,
-      height: '100%',
       padding: '0',
     },
 
