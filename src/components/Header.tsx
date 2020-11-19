@@ -20,8 +20,6 @@ interface Props {
   setActiveTab: Function;
 }
 
-const drawerWidth = 200;
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
