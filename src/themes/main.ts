@@ -15,7 +15,7 @@ const theme = createMuiTheme({
       selected: '#fff',
       hover: 'rgba(255, 255, 255, .3)',
     },
-    divider: '#fff',
+    divider: '#000',
   },
   typography: {
     fontFamily: [

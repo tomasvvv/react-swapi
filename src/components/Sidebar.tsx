@@ -8,6 +8,7 @@ import {
   Toolbar,
   makeStyles,
   createStyles,
+  withStyles,
 } from '@material-ui/core';
 import React from 'react';
 import { ITab } from '../interfaces/ITab';
@@ -19,6 +20,14 @@ interface Props {
 }
 
 const drawerWidth = 200;
+
+const CustomDivider = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      backgroundColor: '#fff',
+    },
+  }),
+)(Divider);
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
     listItem: {
       height: '42px',
       color: theme.palette.secondary.main,
+      borderColor: '#fff',
     },
     selectedListItem: {
       color: theme.palette.primary.main,
@@ -67,7 +77,7 @@ export default function Sidebar({ tabs, activeTab, setActiveTab }: Props): JSX.E
       anchor="left"
     >
       <Toolbar />
-      <Divider />
+      <CustomDivider />
       <List className={classes.list}>
         {tabs?.map((tab, index) => (
           <ListItem
