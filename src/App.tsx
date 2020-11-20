@@ -7,6 +7,8 @@ import {
   Input,
   InputAdornment,
   Toolbar,
+  Box,
+  Typography,
 } from '@material-ui/core';
 import { InsertDriveFile, PostAdd, Search } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
@@ -28,12 +30,17 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
     },
-    content: {
+    contentBox: {
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing(3),
+      width: '100%',
+      height: '100%',
     },
     inputMargin: {
       margin: theme.spacing(1),
+    },
+    input: {
+      float: 'right',
     },
   }),
 );
@@ -56,6 +63,10 @@ export default function App(): JSX.Element {
   const [inputs, setInputs] = React.useState<IInputState>({
     search: '',
   });
+
+  // Given attributes will be compared (lowercase) with input text (lowercase)
+  const filterAttributes: (keyof IPerson)[] = ['gender', 'name', 'birth_year', 'homeworld'];
+
   const handleChange = (prop: keyof IInputState) => (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -63,10 +74,18 @@ export default function App(): JSX.Element {
     setInputs({ ...inputs, [prop]: value });
 
     if (prop !== 'search') return;
+    setFilteredPeople(
+      people.filter((person) => {
+        return filterAttributes.find((atr) =>
+          person[atr].toLowerCase().includes(value.toLowerCase()),
+        );
+      }),
+    );
   };
 
   // API results
   const [people, setPeople] = useState<IPerson[]>([]);
+  const [filteredPeople, setFilteredPeople] = useState<IPerson[]>([]); // subset of people
 
   const fetchPeople = () => {
     fetch('https://swapi.dev/api/people', { headers: { origin: '' } })
@@ -84,7 +103,8 @@ export default function App(): JSX.Element {
               };
 
               people.push(newPerson);
-              setPeople(people);
+              setPeople([...people]);
+              setFilteredPeople(people);
             });
         });
       })
@@ -106,11 +126,20 @@ export default function App(): JSX.Element {
           activeTab={activeSidebarTab}
           setActiveTab={setActiveSidebarTab}
         />
-        <main className={classes.content}>
+        <Box justifyContent="center" alignItems="center" className={classes.contentBox}>
           <Toolbar />
+
+          <Typography align="center" variant="h4">
+            Star wars
+          </Typography>
+          <Typography align="center" variant="subtitle1">
+            Star wars heroes from swapi api
+          </Typography>
+
           <Input
             id="search"
             value={inputs.search}
+            className={classes.input}
             placeholder="Search..."
             onChange={handleChange('search')}
             startAdornment={
@@ -119,9 +148,8 @@ export default function App(): JSX.Element {
               </InputAdornment>
             }
           />
-
-          <PersonList people={people} />
-        </main>
+          <PersonList people={filteredPeople} />
+        </Box>
       </div>
     </MuiThemeProvider>
   );
