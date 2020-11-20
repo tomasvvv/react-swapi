@@ -7,8 +7,10 @@ import {
   Input,
   InputAdornment,
   Toolbar,
-  Box,
+  Paper,
   Typography,
+  Container,
+  Box,
 } from '@material-ui/core';
 import { InsertDriveFile, PostAdd, Search } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
@@ -30,17 +32,31 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
     },
-    contentBox: {
-      backgroundColor: theme.palette.background.default,
-      padding: theme.spacing(3),
+    main: {
       width: '100%',
       height: '100%',
+      position: 'relative',
     },
-    inputMargin: {
-      margin: theme.spacing(1),
+    contentBox: {
+      padding: theme.spacing(3),
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    paper: {
+      borderColor: '#c4c4c4',
+      borderRadius: '15px',
+      padding: theme.spacing(3),
+    },
+
+    inputWrapper: {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'flex-end',
     },
     input: {
-      float: 'right',
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
     },
   }),
 );
@@ -88,7 +104,7 @@ export default function App(): JSX.Element {
   const [filteredPeople, setFilteredPeople] = useState<IPerson[]>([]); // subset of people
 
   const fetchPeople = () => {
-    fetch('https://swapi.dev/api/people', { headers: { origin: '' } })
+    fetch('https://swapi.dev/api/people?limit=8', { headers: { origin: '' } })
       .then((res) => res.json())
       .then((res) => {
         res.results.map((person: any) => {
@@ -126,30 +142,35 @@ export default function App(): JSX.Element {
           activeTab={activeSidebarTab}
           setActiveTab={setActiveSidebarTab}
         />
-        <Box justifyContent="center" alignItems="center" className={classes.contentBox}>
+        <main className={classes.main}>
           <Toolbar />
+          <Container className={classes.contentBox}>
+            <Paper variant="outlined" className={classes.paper}>
+              <Typography align="center" variant="h4">
+                Star wars
+              </Typography>
+              <Typography align="center" variant="subtitle1">
+                Star wars heroes from swapi api
+              </Typography>
 
-          <Typography align="center" variant="h4">
-            Star wars
-          </Typography>
-          <Typography align="center" variant="subtitle1">
-            Star wars heroes from swapi api
-          </Typography>
-
-          <Input
-            id="search"
-            value={inputs.search}
-            className={classes.input}
-            placeholder="Search..."
-            onChange={handleChange('search')}
-            startAdornment={
-              <InputAdornment position="start">
-                <Search />
-              </InputAdornment>
-            }
-          />
-          <PersonList people={filteredPeople} />
-        </Box>
+              <Box className={classes.inputWrapper}>
+                <Input
+                  id="search"
+                  value={inputs.search}
+                  className={classes.input}
+                  placeholder="Search..."
+                  onChange={handleChange('search')}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <Search />
+                    </InputAdornment>
+                  }
+                />
+              </Box>
+              <PersonList people={filteredPeople} />
+            </Paper>
+          </Container>
+        </main>
       </div>
     </MuiThemeProvider>
   );
