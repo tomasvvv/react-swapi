@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     box: {
+      overflow: 'hidden',
       width: '100%',
       display: 'flex',
       placeContent: 'flex-end',
@@ -92,6 +93,7 @@ export default function Header({ tabs, activeTab, setActiveTab }: Props): JSX.El
               indicatorColor="primary"
               textColor="primary"
               onChange={handleChange}
+              variant="scrollable"
             >
               {tabs.map((tab, index) => (
                 <Tab
