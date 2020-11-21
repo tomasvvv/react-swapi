@@ -35,11 +35,20 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       width: `${drawerWidth}px`,
       flexShrink: 0,
+      [theme.breakpoints.down('md')]: {
+        width: `100%`,
+      },
     },
     drawerPaper: {
       width: `${drawerWidth}px`,
       backgroundColor: theme.palette.primary.main,
       paddingTop: theme.mixins.toolbar.minHeight,
+
+      [theme.breakpoints.down('md')]: {
+        paddingTop: 0,
+        position: 'relative',
+        width: `100%`,
+      },
     },
 
     // for content to be below app bar

@@ -16,14 +16,6 @@ import React, { useState } from 'react';
 import { IPerson } from '../interfaces/IPerson';
 import { sort, SortOrder, getComparator } from '../sort';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    table: {
-      minWidth: 735,
-    },
-  }),
-);
-
 const CustomTableCell = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -77,6 +69,15 @@ const CustomTableHead = ({ sortBy, sortOrder, requestSort }: TableHeadProps) => 
     </TableHead>
   );
 };
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    table: {
+      minWidth: 735,
+      overflow: 'auto',
+    },
+  }),
+);
 
 interface Props {
   people: IPerson[];

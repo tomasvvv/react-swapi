@@ -31,14 +31,18 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
+      minHeight: '100vh',
+      [theme.breakpoints.down('md')]: {
+        display: 'block',
+      },
     },
     main: {
       width: '100%',
-      height: '100%',
-      position: 'relative',
+      display: 'block',
     },
     contentBox: {
       padding: theme.spacing(3),
+      height: `calc(100% - ${theme.mixins.toolbar.minHeight}px)`,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -47,6 +51,12 @@ const useStyles = makeStyles((theme: Theme) =>
       borderColor: '#c4c4c4',
       borderRadius: '15px',
       padding: theme.spacing(3),
+
+      minWidth: 800,
+      [theme.breakpoints.down('md')]: {
+        minWidth: '100%',
+        maxWidth: '100%',
+      },
     },
 
     inputWrapper: {
